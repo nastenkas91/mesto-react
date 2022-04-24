@@ -1,6 +1,4 @@
-import React from "react";
-
-function PopupWithForm({ title, name, isOpen, onClose, children }) {
+function PopupWithForm({ title, name, isOpen, onClose, submitTitle, children }) {
 
   return (
       <div className={`popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`}>
@@ -9,6 +7,7 @@ function PopupWithForm({ title, name, isOpen, onClose, children }) {
           <h2 className={`popup__name popup__name_type_${name}`}>{ title }</h2>
           <form className="form" name={`${name}Form`} noValidate>
             { children }
+          <button aria-label={submitTitle} type="submit" className="form__submit-btn">{submitTitle}</button>
           </form>
         </div>
       </div>

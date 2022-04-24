@@ -9,7 +9,7 @@ function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState('')
+  const [selectedCard, setSelectedCard] = React.useState(null)
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true);
@@ -31,7 +31,7 @@ function App() {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
     setEditAvatarPopupOpen(false);
-    setSelectedCard('');
+    setSelectedCard(null);
   }
 
   return (
@@ -42,7 +42,8 @@ function App() {
           onCardClick={handleCardClick} />
           <Footer />
 
-          <PopupWithForm name={'edit-profile'} title={'Редактировать профиль'} isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
+          <PopupWithForm name='edit-profile' title='Редактировать профиль' isOpen={isEditProfilePopupOpen}
+                         onClose={closeAllPopups} submitTitle='Сохранить'>
             <input
               type="text"
               name="profileName"
@@ -65,10 +66,10 @@ function App() {
               placeholder="Род деятельности"
             />
             <span className="form__field-error occupation-error"></span>
-            <button aria-label="Сохранить" type="submit" className="form__submit-btn">Сохранить</button>
           </PopupWithForm>
 
-          <PopupWithForm name={'add-card'} title={'Новое место'} isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
+          <PopupWithForm name='add-card' title='Новое место' isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}
+          submitTitle='Создать'>
             <input
               type="text"
               name="name"
@@ -89,14 +90,13 @@ function App() {
               placeholder="Ссылка на картинку"
             />
             <span className="form__field-error imgUrl-error"></span>
-            <button aria-label="Создать" type="submit" className="form__submit-btn">Создать</button>
           </PopupWithForm>
 
-          <PopupWithForm name={'confirm'} title={'Вы уверены?'} onClose={closeAllPopups}>
-            <button type="submit" aria-label="Да" className="form__submit-btn">Да</button>
+          <PopupWithForm name='confirm' title='Вы уверены?' onClose={closeAllPopups} submitTitle='Да'>
           </PopupWithForm>
 
-          <PopupWithForm name={'avatar'} title={'Обновить аватар'} isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
+          <PopupWithForm name='avatar' title='Обновить аватар' isOpen={isEditAvatarPopupOpen}
+                         onClose={closeAllPopups} submitTitle='Создать'>
             <input
               type="url"
               name="avatarLink"
@@ -106,10 +106,11 @@ function App() {
               placeholder="Ссылка на аватар"
             />
             <span className="form__field-error avatarUrl-error"></span>
-            <button aria-label="Создать" type="submit" className="form__submit-btn">Создать</button>
           </PopupWithForm>
 
-          <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+          {selectedCard && (
+              <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+          )}
 
         </div>
       </div>)}

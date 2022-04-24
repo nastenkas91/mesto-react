@@ -1,5 +1,3 @@
-import React from "react";
-
 function Card({card, onClick}) {
 
   function handleClick() {
@@ -7,7 +5,7 @@ function Card({card, onClick}) {
   }
 
   return (
-    <li key={card._id} className="element">
+    <li className="element">
       <img style={{ backgroundImage: `url(${card.link})` }} className="element__image" onClick={handleClick}/>
       <button aria-label="Удалить" type="button" className="element__delete-btn"></button>
       <div className="element__name-wraper">

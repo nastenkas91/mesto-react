@@ -34,9 +34,10 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
   return (<main>
     <section className="profile">
       <div className="profile__avatar-container">
-        <img style={{ backgroundImage: `url(${userAvatar})` }} alt={userName} className="profile__avatar" />
+        <img style={{ backgroundImage: `url(${userAvatar})` }} alt={userName} className="profile__avatar"
+             onClick={ onEditAvatar } />
         <img src={editAvatarImg} alt="Изменить аватар"
-             className="profile__avatar-edit-btn" onClick={ onEditAvatar } />
+             className="profile__avatar-edit-btn" />
       </div>
       <div className="profile__info">
         <div className="profile__name-wraper">
@@ -51,9 +52,8 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
     <section className="elements">
       <ul className="elements__list">
         {
-          cards.map((cardData) => (
-            Card({card: cardData, onClick: onCardClick})
-          ))
+          cards.map(card => <Card key={card._id} card={card} onClick={onCardClick} />
+          )
         }
       </ul>
     </section>
