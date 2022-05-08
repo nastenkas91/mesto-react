@@ -1,5 +1,5 @@
 import PopupWithForm from "./PopupWithForm";
-import { useRef,useEffect } from "react";
+import {useRef, useEffect, useState} from "react";
 import Popup from "./Popup";
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading, onOverlayClick }) {
@@ -15,7 +15,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading, onOverlay
   useEffect(() => {
     avatarLink.current.value = ''
   }, [isOpen])
-  
+
   return (
     <Popup
       isOpen={isOpen}

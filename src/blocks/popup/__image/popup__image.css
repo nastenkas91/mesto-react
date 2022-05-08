@@ -1,4 +1,6 @@
 .popup__image {
+  display: block;
+  box-sizing: border-box;
   object-position: center;
   object-fit: contain;
   max-width: 75vw;

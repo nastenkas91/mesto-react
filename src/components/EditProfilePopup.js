@@ -13,7 +13,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading, onOverlayC
   useEffect(() => {
     setName(currentUser.name || '');
     setDescription(currentUser.about || '');
-  }, [currentUser])
+  }, [currentUser, isOpen])
 
 
   function handleSubmit(e) {
@@ -22,6 +22,14 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading, onOverlayC
       name,
       about: description,
     });
+  }
+
+  function handleNameChange(e) {
+    setName(e.target.value);
+  }
+
+  function handleDescriptionChange(e) {
+    setDescription(e.target.value);
   }
 
   return (
@@ -46,8 +54,8 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading, onOverlayC
           maxLength="40"
           required
           placeholder="Имя"
-          value={name}
-          onChange={e => setName(e.target.value)}
+          value={name || ''}
+          onChange={handleNameChange}
         />
         <span className="form__field-error name-error"></span>
         <input
@@ -59,8 +67,8 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading, onOverlayC
           maxLength="200"
           required
           placeholder="Род деятельности"
-          value={description}
-          onChange={evt => setDescription(evt.target.value)}
+          value={description || ''}
+          onChange={handleDescriptionChange}
         />
         <span className="form__field-error occupation-error"></span>
       </PopupWithForm>
