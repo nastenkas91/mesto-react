@@ -1,4 +1,5 @@
 import PopupWithForm from "./PopupWithForm";
+import Popup from "./Popup";
 
 function ConfirmDeletePopup({ isOpen, isLoading, onClose, onSubmit, onOverlayClick }) {
   function handleSubmit(e) {
@@ -7,16 +8,20 @@ function ConfirmDeletePopup({ isOpen, isLoading, onClose, onSubmit, onOverlayCli
   }
 
   return (
-    <PopupWithForm
-      name='confirm'
-      title='Вы уверены?'
+    <Popup
       isOpen={isOpen}
       onClose={onClose}
-      submitTitle={isLoading ? 'Удаление...' : 'Да'}
-      onSubmit={handleSubmit}
-      onOverlayClick={onOverlayClick}
     >
-    </PopupWithForm>
+      <PopupWithForm
+        name='confirm'
+        title='Вы уверены?'
+        onClose={onClose}
+        submitTitle={isLoading ? 'Удаление...' : 'Да'}
+        onSubmit={handleSubmit}
+        onOverlayClick={onOverlayClick}
+      >
+      </PopupWithForm>
+    </Popup>
   )
 }
 

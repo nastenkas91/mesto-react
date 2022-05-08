@@ -18,7 +18,7 @@ function App() {
   const [isConfirmPopupOpen, setConfirmPopupOpen] = useState(false);
 
   //данные карточки для превью и для удаления
-  const [selectedCard, setSelectedCard] = useState(null);
+  const [selectedCard, setSelectedCard] = useState({ isOpen: false });
   const [selectedCardId, setSelectedCardId] = useState('');
 
   //данные пользователя и карточек
@@ -52,7 +52,7 @@ function App() {
   }
 
   function handleCardClick(card) {
-    setSelectedCard(card);
+    setSelectedCard({ isOpen: true, ...card });
   }
 
   function handleCardLike(card) {
@@ -75,23 +75,9 @@ function App() {
     setAddPlacePopupOpen(false);
     setEditAvatarPopupOpen(false);
     setConfirmPopupOpen(false);
-    setSelectedCard(null);
+    setSelectedCard({ isOpen: false });
     setSelectedCardId('')
   }
-
-  // function handleEscClose(e) {
-  //   if (e.key === 'Escape') {
-  //     closeAllPopups();
-  //   }
-  // }
-  //
-  // document.addEventListener('keydown', handleEscClose)
-  //
-  // function handleOverlayClickClose(e) {
-  //   if (e.target === e.currentTarget) {
-  //     closeAllPopups();
-  //   }
-  // }
 
   function handleUpdateUser(data) {
     setLoadingButton(true);
@@ -165,7 +151,6 @@ function App() {
               onClose={closeAllPopups}
               onUpdateUser={handleUpdateUser}
               isLoading={loadingButton}
-              //onOverlayClick={handleOverlayClickClose}
             />
 
             <AddPlacePopup
@@ -173,7 +158,6 @@ function App() {
               onClose={closeAllPopups}
               onAddPlace={handleAddPlaceSubmit}
               isLoading={loadingButton}
-              //onOverlayClick={handleOverlayClickClose}
             />
 
             <ConfirmDeletePopup
@@ -182,7 +166,6 @@ function App() {
               cardId={selectedCardId}
               onSubmit={handleCardDelete}
               isLoading={loadingButton}
-              //onOverlayClick={handleOverlayClickClose}
             />
 
             <EditAvatarPopup
@@ -190,7 +173,6 @@ function App() {
               onClose={closeAllPopups}
               onUpdateAvatar={handleUpdateAvatar}
               isLoading={loadingButton}
-              //onOverlayClick={handleOverlayClickClose}
             />
 
             {selectedCard && (
