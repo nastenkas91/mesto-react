@@ -41,47 +41,42 @@ class Api {
       .then(this._checkResponse);
   }
 
-  editAvatar({ data }) {
+  editAvatar({ avatar }) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        avatar: data,
+        avatar,
       })
     })
       .then(this._checkResponse);
   }
 
-  addNewCard(cardInfo) {
+  addNewCard({ name, link }) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
-        name: cardInfo.name,
-        link: cardInfo.link
+        name: name,
+        link: link
       })
     })
       .then(this._checkResponse);
   }
 
-  addLike(cardId) {
+  _sendLikeRequest(cardId, method) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-      method: 'PUT',
-      headers: {
-        authorization: `${this._token}`
-      },
-  })
-      .then(this._checkResponse);
-  }
-
-  deleteLike(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-      method: 'DELETE',
+      method: method,
       headers: {
         authorization: `${this._token}`
       },
     })
       .then(this._checkResponse);
+  }
+
+  changeLikeStatus(cardId, isLiked) {
+    return isLiked ? this._sendLikeRequest(cardId, 'PUT')
+      : this._sendLikeRequest(cardId, 'DELETE')
   }
 
   deleteCard(cardId) {
