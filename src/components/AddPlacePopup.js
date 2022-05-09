@@ -1,14 +1,36 @@
 import PopupWithForm from "./PopupWithForm";
 import {useState, useEffect} from "react";
 import Popup from "./Popup";
+import React from "react";
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading, onOverlayClick }) {
   const [name, setName] = useState('')
   const [link, setLink] = useState('')
 
+  const [nameIsValid, setNameIsValid] = useState(false);
+  const [errorName, setErrorName] = useState('');
+  const [linkIsValid, setLinkIsValid] = useState(false);
+  const [errorLink, setErrorLink] = useState('');
+
+  function handleNameChange(e) {
+    const nameInput = e.target;
+    setName(nameInput.value);
+    setNameIsValid(nameInput.validity.valid);
+    nameIsValid ? setErrorName('') : setErrorName(nameInput.validationMessage);
+  }
+
+  function handleLinkChange(e) {
+    const linkInput = e.target;
+    setLink(linkInput.value);
+    setLinkIsValid(linkInput.validity.valid);
+    linkIsValid ? setErrorLink('') : setErrorLink(linkInput.validationMessage);
+  }
+
   useEffect(() => {
     setName('');
-    setLink('')
+    setLink('');
+    setErrorLink('');
+    setErrorName('')
   }, [isOpen])
 
   function handleSubmit(e) {
@@ -29,9 +51,8 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading, onOverlayClick 
         name='add-card'
         title='Новое место'
         onClose={onClose}
-        submitTitle={isLoading ? 'Сохранение...' : 'Сохранить'}
-        onSubmit={handleSubmit}
         onOverlayClick={onOverlayClick}
+        onSubmit={handleSubmit}
       >
         <input
           type="text"
@@ -43,9 +64,9 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading, onOverlayClick 
           required
           placeholder="Название"
           value={name}
-          onChange={e => setName(e.target.value)}
+          onChange={handleNameChange}
         />
-        <span className="form__field-error title-error"></span>
+        <span className="form__field-error title-error">{errorName}</span>
         <input
           type="url"
           name="link"
@@ -54,9 +75,17 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading, onOverlayClick 
           required
           placeholder="Ссылка на картинку"
           value={link}
-          onChange={e => setLink(e.target.value)}
+          onChange={handleLinkChange}
         />
-        <span className="form__field-error imgUrl-error"></span>
+        <span className="form__field-error imgUrl-error">{errorLink}</span>
+        <button
+          disabled={!(nameIsValid && linkIsValid)}
+          aria-label='Сохранить'
+          type="submit"
+          className={`form__submit-btn ${(nameIsValid && linkIsValid) ? '' : 'form__submit-btn_disabled'}`}
+          onSubmit={handleSubmit}>
+            {isLoading ? 'Сохранение...' : 'Сохранить'}
+        </button>
       </PopupWithForm>
     </Popup>
   )

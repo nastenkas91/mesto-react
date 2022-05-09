@@ -5,6 +5,15 @@ import Popup from "./Popup";
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading, onOverlayClick }) {
   const avatarLink = useRef()
 
+  const [avatarIsValid, setAvatarIsValid] = useState(false);
+  const [error, setError] = useState('');
+
+  function handleAvatarChange() {
+    const avatarInput = avatarLink.current;
+    setAvatarIsValid(avatarInput.validity.valid);
+    avatarIsValid ? setError('') : setError(avatarInput.validationMessage);
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     onUpdateAvatar({
@@ -14,6 +23,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading, onOverlay
 
   useEffect(() => {
     avatarLink.current.value = ''
+    setError('')
   }, [isOpen])
 
   return (
@@ -25,12 +35,12 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading, onOverlay
         name='avatar'
         title='Обновить аватар'
         onClose={onClose}
-        submitTitle={isLoading ? 'Создание...' : 'Создать'}
         onSubmit={handleSubmit}
         onOverlayClick={onOverlayClick}
       >
         <input
           ref={avatarLink}
+          onChange={handleAvatarChange}
           type="url"
           name="avatarLink"
           id="avatarUrl"
@@ -38,7 +48,15 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading, onOverlay
           required
           placeholder="Ссылка на аватар"
         />
-        <span className="form__field-error avatarUrl-error"></span>
+        <span className="form__field-error avatarUrl-error">{error}</span>
+        <button
+          disabled={avatarIsValid}
+          aria-label='Создать'
+          type="submit"
+          className={`form__submit-btn ${avatarIsValid ? '' : 'form__submit-btn_disabled'}`}
+          onSubmit={handleSubmit}>
+          {isLoading ? 'Создание...' : 'Создать'}
+        </button>
       </PopupWithForm>
     </Popup>
   )
