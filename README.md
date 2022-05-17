@@ -20,3 +20,4 @@ update profile information, add likes. All the forms are checked for validity.
 * Api
 
 ## Ссылка на github pages
+https://nastenkas91.github.io/mesto-react/
