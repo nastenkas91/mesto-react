@@ -9,7 +9,7 @@ update profile information, add likes. All the forms are checked for validity.
 * form validation
 * Api
 
-##How to run project
+## How to run project
 * npm i - install dependencies
 * npm run dev — run project on local server
 
@@ -26,7 +26,7 @@ https://nastenkas91.github.io/mesto-react/
 * валидация форм
 * Api
 
-##Запуск проекта:
+## Запуск проекта:
 * npm i — установить зависимости;
 * npm run dev — запустить проект на локальном сервере;
 
